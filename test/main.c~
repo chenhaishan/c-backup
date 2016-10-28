@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class A{
+public:
+        void func()const{
+                cout<<"const"<<endl;
+        }
+        
+        void func(){
+                cout<<"non-const"<<endl;
+        }
+};
+
+int main(){
+        vector<string> vs;
+        vs.push_back("hello");
+        vs.push_back("world");
+        vector<string>::const_iterator citr = vs.cbegin();
+        cout<<*citr<<endl;
+        citr = vs.cend();
+        
+        
+        
+        return 0;
+}

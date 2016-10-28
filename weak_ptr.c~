@@ -1,0 +1,94 @@
+#include <iostream>
+#include <memory>
+#include <list>
+#include "X.h"
+//#include "Y.h"
+using namespace std;
+//class X;
+//class Y;
+/*
+class X{
+friend class Y;
+private:
+    int i;
+    char c;
+    weak_ptr<Y> wy;
+public:
+    X(int j, char d);
+    void registerY(Y *y);
+    void check_reg();
+    
+    void change(int j, char d);
+    
+    void notify();
+};
+
+X::X(int j=0, char d=0):i(j), c(d){}
+void X::registerY(Y *y){
+    wy = make_shared<Y>(*y);
+}
+void X::check_reg(){
+    if(wy.lock()){
+        cout<<"registered!"<<endl;
+    }
+    else{
+        cout<<"don't register"<<endl;
+    }
+}
+
+void X::change(int j, char d){
+    i = j;
+    c = d;
+    notify();
+}
+    
+void X::notify(){
+    if(wy.lock()){
+        wy.lock()->update(i, c);
+    }
+    else{
+        cout<<"Y is not registerd"<<endl;
+    }
+}
+
+class Y{
+friend class X;
+private:
+    int i;
+    char c;
+    weak_ptr<X> wx;
+public:
+    
+    void registerX(X *x);
+    
+    void update(int j, char d);
+};
+
+void Y::registerX(X *x){
+    wx = make_shared<X>(*x);
+    x->registerY(this);
+}
+
+void Y::update(int j, char d){
+    i = j;
+    c = d;
+    cout<<"updated:?"<<endl<<"i:"<<i<<","<<"c: "<<c<<endl;
+}
+*/
+int main()
+{
+    shared_ptr<X> sx = make_shared<X>();
+    shared_ptr<Y> sy = make_shared<Y>();
+    sy->registerX(sx.get());
+    sx->change(10, 'a');
+
+    shared_ptr<int> s_ptr = make_shared<int>(10);
+    cout<<"count: "<<s_ptr.use_count()<<endl;
+    weak_ptr<int> w_ptr(s_ptr);
+    cout<<"count: "<<s_ptr.use_count()<<endl;
+    shared_ptr<int> s_ptr1(w_ptr.lock());
+    cout<<"count: "<<s_ptr.use_count()<<endl;
+    shared_ptr<int> s_ptr2 = w_ptr.lock();
+    cout<<"count: "<<s_ptr.use_count()<<endl;
+    return 0;
+}

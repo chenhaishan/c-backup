@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+void func(int row, int (*A)[3]){
+    int i = 0, j = 0;
+    printf("sizeof(A[0])=%ld\n",sizeof(A[0]));
+    printf("sizeof(A)=%ld\n",sizeof(A));
+    printf("sizeof(*A)=%ld\n",sizeof(*A));
+    for(;i<row;++i){
+        for(j=0;j<sizeof(A[0])/sizeof(A[0][0]);++j){
+            printf("%d,",A[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main()
+{
+    int a[3][3] = {
+        {1,2,3},
+        {4,5,6},
+        {7,8,9}
+    };
+    printf("sizeof(a)=%ld\n",sizeof(a));
+    printf("sizeof(a[0])=%ld\n",sizeof(a[0]));
+    func(3, a);
+    return 0;
+}

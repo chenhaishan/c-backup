@@ -1,0 +1,26 @@
+#ifndef Y_H
+#define Y_H
+
+#include "X.h"
+#include <memory>
+using namespace std;
+
+class Y{
+friend class X;
+private:
+    int i;
+    char c;
+    weak_ptr<X> wx;
+public:
+    //Y(int j=0, char d=0):i(j), c(d){}
+    void registerX(X *x);
+    
+    void update(int j, char d);
+};
+
+void Y::registerX(X *x){
+    wx = make_shared<X>(*x);
+    x->registerY(this);
+}
+
+#endif
